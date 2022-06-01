@@ -5,6 +5,8 @@ from scipy.integrate import ode
 from scipy import signal
 import ctypes
 import os
+from pathlib import Path
+
 
 DOUBLE = ctypes.c_double
 INT = ctypes.c_int
@@ -19,10 +21,16 @@ class tridiag_matrix(ctypes.Structure):
                 ("cc", ctypes.POINTER(ctypes.c_double))]
 
 # load C library
-os.path.dirname(os.path.abspath(__file__))
-libtrisolv = np.ctypeslib.load_library(
+# TODO: pip installation for the .so file does not nicely make an importable package
+#  Hardcoding the path here
+c_obj_filename = "libcochlea_utils.cpython-39-x86_64-linux-gnu.so"
+thisdir = os.path.dirname(os.path.abspath(__file__))
+c_obj_path = Path(thisdir).parent / c_obj_filename
+libtrisolv = ctypes.cdll.LoadLibrary(c_obj_path)
+
+#libtrisolv = np.ctypeslib.load_library(
 #    "tridiag.so", os.path.dirname(os.path.abspath(__file__)))
-    "cochlea_utils.cpython-39-x86_64-linux-gnu")
+
 
 # load tridiagonal solver function and defines input
 libtrisolv.solve_tridiagonal.restype = None

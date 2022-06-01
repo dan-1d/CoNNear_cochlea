@@ -20,12 +20,12 @@ setup_args = dict(
         #     py_limited_api = True
         # )
         Extension(
-            'cochlea_utils',
+            'libcochlea_utils',
             sources = ['src/cochlea_tl_model/cochlea_utils.c'],
             extra_compile_args = ["-fpic", "-O3", "-ffast-math"],
             # include_dirs = ['lib'],
             # py_limited_api = True
-            language="C"
+            language="C",
         )
     ]
 )
