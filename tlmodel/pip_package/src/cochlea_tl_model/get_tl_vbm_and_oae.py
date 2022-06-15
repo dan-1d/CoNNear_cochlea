@@ -2,6 +2,7 @@ import numpy as np
 from .solve_one_cochlea import solve_one_cochlea
 from .cochlear_model import *
 import multiprocessing as mp
+import pathlib
 
 
 def tl_vbm_and_oae(stim, L):
@@ -9,9 +10,10 @@ def tl_vbm_and_oae(stim, L):
     DEFINE ALL THE PARAMTERS HERE
     ''' 
     #Define all the variables for the model
-    sheraPdat = 'StartingPoles.dat'
+    localpath = pathlib.Path(__file__).parent.resolve()
+    sheraPdat = localpath / 'StartingPoles.dat'
     poles = []
-    for line in open(sheraPdat, 'r'):
+    for line in open(str(sheraPdat), 'r'):
         poles.append(float(line.rstrip()))
     sheraPo = np.array(poles)
     irregularities = 1 #adaptIRR0! 
